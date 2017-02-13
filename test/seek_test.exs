@@ -21,7 +21,7 @@ defmodule SeekTest do
     assert Test.DB.query!("SELECT count(*) FROM users") == [%{"count" => 0}]
   end
 
-  test "supports query parameters" do
+  test "supports query params" do
     Test.DB.query!("INSERT INTO users (email) VALUES (:email)", %{"email" => "jack.black@example.com"})
     assert Test.DB.query!("SELECT * FROM users") == [%{"id" => 1, "email" => "jack.black@example.com"}]
   end

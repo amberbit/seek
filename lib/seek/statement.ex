@@ -1,5 +1,5 @@
 defmodule Seek.Statement do
-  def prepare(query, params \\ %{}) do
+  def prepare(%{query: query, params: params} = cmd) do
     { prepared_query, params_template } = process_query(query)
 
     { prepared_query, params |> prepare_params(params_template) }
@@ -7,19 +7,19 @@ defmodule Seek.Statement do
 
   defp process_query(query) do
     query
-    |> extract_parameters_map
+    |> extract_params_map
     |> substitute_parameter_names(query)
   end
 
-  defp extract_parameters_map(query) do
+  defp extract_params_map(query) do
     Regex.scan(~r/(\:[a-zA-Z0-9]+)/i, query)
     |> Enum.map(&hd/1)
     |> Enum.map(&( String.slice(&1, 1..-1) ))
     |> Enum.uniq
   end
 
-  defp substitute_parameter_names(named_parameters, query) do
-    {do_substitute(query, named_parameters, 1), named_parameters}
+  defp substitute_parameter_names(named_params, query) do
+    {do_substitute(query, named_params, 1), named_params}
   end
 
   defp do_substitute(query, [h | t], index) do

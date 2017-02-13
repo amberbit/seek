@@ -25,23 +25,18 @@ defmodule Seek.DB do
         ])
       end
 
-      def query!(query, parameters \\ %{}, struct_module \\ nil) do
-        {prepared_query, prepared_parameters} = Seek.Statement.prepare(query, to_map(parameters))
+      def query!(query, params \\ %{}, struct_module \\ nil) do
+        cmd = Seek.Command.new(query, params)
+
+        {prepared_query, prepared_params} = Seek.Statement.prepare(cmd)
 
         @name
-        |> Postgrex.query!(prepared_query, prepared_parameters)
+        |> Postgrex.query!(prepared_query, prepared_params)
         |> Seek.Result.format(struct_module)
       end
 
-      def first!(query, parameters \\ %{}, struct_module \\ nil) do
-        query!(query, parameters, struct_module) |> List.first
-      end
-
-      defp to_map(struct) do
-        case Map.has_key?(struct, :__struct__) do
-          true -> Map.from_struct(struct)
-          false -> struct
-        end |> Enum.reduce(%{}, fn ({k, v}, acc) -> Map.put(acc, "#{k}", v) end)
+      def first!(query, params \\ %{}, struct_module \\ nil) do
+        query!(query, params, struct_module) |> List.first
       end
     end
   end
