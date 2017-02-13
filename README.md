@@ -19,7 +19,7 @@ Put a database configuration in your `config.exs` too:
 
 ```elixir
 config :seek, connection: [
-  database: "seek_test",
+  database: "myappdb",
   pool_mod: DBConnection.Poolboy
 ]
 ```
