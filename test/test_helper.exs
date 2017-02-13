@@ -1,7 +1,7 @@
 ExUnit.start()
 
 defmodule Test.DB do
-  use Seek.DB
+  use Seek.DatabaseHandle
 end
 
 System.cmd("dropdb", ["seek_test"])

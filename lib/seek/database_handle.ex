@@ -1,6 +1,6 @@
 # This is largely stolen from Moebius.
 # Original author is Rob Conery
-defmodule Seek.DB do
+defmodule Seek.DatabaseHandle do
   defmacro __using__(_opts) do
     quote location: :keep do
       @name __MODULE__

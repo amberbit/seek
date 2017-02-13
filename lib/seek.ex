@@ -1,7 +1,18 @@
 # Parts may be stolen by him from Ecto and authored by Jose Valim,
 # then stolen by me from Moebius ;)
 # TODO: Which probably means this part should be moved to Postgrex BTW.
+
+defmodule Seek.DB do
+  use Seek.DatabaseHandle
+end
+
 defmodule Seek do
+  use Application
+
+  def start(_type, _args) do
+    Seek.connection_config |> Seek.DB.start_link
+  end
+
   def connection_config(), do: connection_config(:connection)
   def connection_config(key) when is_atom(key) do
     opts = Application.get_env(:seek, key)

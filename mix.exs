@@ -1,13 +1,27 @@
 defmodule Seek.Mixfile do
   use Mix.Project
 
+  @version "0.0.1"
+
   def project do
     [app: :seek,
-     version: "0.1.0",
+     description: "A simple wrapper around Postgrex to simplify writing SQL queries",
+     version: @version,
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     name: "Seek",
+     docs: [source_ref: "v#{@version}",
+       main: "readme",
+       source_url: "https://github.com/amberbit/seek",
+       extras: ["README.md"]],
      deps: deps()]
+  end
+
+  def package do
+    [maintainers: ["Hubert Łępicki"],
+      licenses: ["New BSD"],
+      links: %{"GitHub" => "https://github.com/amberbit/seek"}]
   end
 
   # Configuration for the OTP application
@@ -29,6 +43,7 @@ defmodule Seek.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:postgrex, "~> 0.13.0"},
+     {:ex_doc, "~> 0.14", only: :dev},
      {:deep_merge, "~> 0.1.0"} # TODO: get rid of this dep when have minute
     ]
   end
