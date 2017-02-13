@@ -8,7 +8,9 @@ defmodule Seek.Result do
   end
 
   defp to_map(row, columns) do
-    Enum.zip(columns, row) |> Enum.into(%{})
+    Enum.zip(columns, row)
+    |> Enum.into(%{})
+    |> unflatten
   end
 
   # Author: Jose Valim
@@ -21,6 +23,14 @@ defmodule Seek.Result do
         {:ok, v} -> %{acc | k => v}
         :error -> acc
       end
+    end
+  end
+
+  defp unflatten(map, dest_map \\ %{}) do
+    list = map |> Map.to_list
+
+    Enum.reduce map, dest_map, fn ({k, v}, acc) ->
+      Map.put(acc, k, v)
     end
   end
 end

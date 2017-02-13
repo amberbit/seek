@@ -12,7 +12,7 @@ defmodule Seek.Statement do
   end
 
   defp extract_params_map(query) do
-    Regex.scan(~r/(\:[a-zA-Z0-9]+)/i, query)
+    Regex.scan(~r/(\:[a-zA-Z0-9_]+)/i, query)
     |> Enum.map(&hd/1)
     |> Enum.map(&( String.slice(&1, 1..-1) ))
     |> Enum.uniq
