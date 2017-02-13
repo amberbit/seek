@@ -1,5 +1,5 @@
 defmodule Seek.Statement do
-  def prepare(%{query: query, params: params} = cmd) do
+  def prepare(%{query: query, params: params} = _cmd) do
     { prepared_query, params_template } = process_query(query)
 
     { prepared_query, params |> prepare_params(params_template) }

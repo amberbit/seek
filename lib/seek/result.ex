@@ -38,8 +38,6 @@ defmodule Seek.Result do
   end
 
   defp to_result(map) do
-    list = map |> Map.to_list
-
     Enum.reduce map, %{}, fn ({k, v}, acc) ->
       case String.split(k, "__") do
         # TODO: get rid of deep merge dep

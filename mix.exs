@@ -11,7 +11,7 @@ defmodule Seek.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      name: "Seek",
-     package: package,
+     package: package(),
      docs: [source_ref: "v#{@version}",
        main: "readme",
        source_url: "https://github.com/amberbit/seek",
