@@ -47,7 +47,7 @@ defmodule SeekTest do
 
 
     assert(
-      Test.DB.query!("SELECT users.email AS user__email, posts.subject AS post__subject FROM users INNER JOIN posts ON posts.user_id = users.id") ==
+      Test.DB.first!("SELECT users.email AS user__email, posts.subject AS post__subject FROM users INNER JOIN posts ON posts.user_id = users.id") ==
         %{"user" => %{"email" => "jack.black@example.com"}, "post" => %{"subject" => "Subject"}}
     )
 

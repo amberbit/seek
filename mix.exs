@@ -15,7 +15,7 @@ defmodule Seek.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger, :postgrex]]
+    [extra_applications: [:logger, :postgrex, :deep_merge]]
   end
 
   # Dependencies can be Hex packages:
@@ -28,6 +28,8 @@ defmodule Seek.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:postgrex, "~> 0.13.0"}]
+    [{:postgrex, "~> 0.13.0"},
+     {:deep_merge, "~> 0.1.0"} # TODO: get rid of this dep when have minute
+    ]
   end
 end
