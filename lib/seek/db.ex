@@ -24,6 +24,14 @@ defmodule Seek.DB do
           {Postgrex.Extensions.JSON, library: Poison},
         ])
       end
+
+      def query!(query, parameters \\ %{}) do
+        {prepared_query, prepared_parameters} = Seek.Statement.prepare(query, parameters)
+
+        @name
+        |> Postgrex.query!(prepared_query, prepared_parameters)
+        |> Seek.Result.format
+      end
     end
   end
 end
