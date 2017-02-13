@@ -29,7 +29,7 @@ defmodule Seek.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [applications: [:logger, :postgrex, :deep_merge]]
+    [extra_applications: [:logger, :postgrex, :deep_merge], mod: {Seek, []}]
   end
 
   # Dependencies can be Hex packages:
