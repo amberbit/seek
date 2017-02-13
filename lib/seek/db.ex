@@ -26,17 +26,19 @@ defmodule Seek.DB do
       end
 
       def query!(query, params \\ %{}, struct_module \\ nil) do
-        cmd = Seek.Command.new(query, params)
+        Seek.Command.new(query, params) |> execute(struct_module)
+      end
 
+      def first!(query, params \\ %{}, struct_module \\ nil) do
+        query!(query, params, struct_module) |> List.first
+      end
+
+      def execute(cmd, struct_module \\ nil) do
         {prepared_query, prepared_params} = Seek.Statement.prepare(cmd)
 
         @name
         |> Postgrex.query!(prepared_query, prepared_params)
         |> Seek.Result.format(struct_module)
-      end
-
-      def first!(query, params \\ %{}, struct_module \\ nil) do
-        query!(query, params, struct_module) |> List.first
       end
     end
   end
