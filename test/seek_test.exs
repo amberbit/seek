@@ -50,7 +50,20 @@ defmodule SeekTest do
       Test.DB.first!("SELECT users.email AS user__email, posts.subject AS post__subject FROM users INNER JOIN posts ON posts.user_id = users.id") ==
         %{"user" => %{"email" => "jack.black@example.com"}, "post" => %{"subject" => "Subject"}}
     )
+  end
 
+  test "supports multi line SQL" do
+    Test.DB.query!("CREATE TABLE posts\n(id SERIAL NOT NULL, subject text, user_id INT references users(id))")
+    user = Test.DB.first!("INSERT INTO
+    users (email) VALUES (:email)
+    returning *", %Test.User{email: "jack.black@example.com"}, Test.User)
+    Test.DB.query!("INSERT INTO posts\n(subject, user_id) VALUES (:subject, :user_id)", %{"subject" => "Subject", "user_id" => user.id})
+
+
+    assert(
+      Test.DB.first!("SELECT users.email\nAS user__email, posts.subject AS post__subject FROM users INNER JOIN posts ON posts.user_id = users.id") ==
+        %{"user" => %{"email" => "jack.black@example.com"}, "post" => %{"subject" => "Subject"}}
+    )
   end
 end
 
